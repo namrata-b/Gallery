@@ -10,8 +10,18 @@ import com.fivehundredpx.greedolayout.GreedoSpacingItemDecoration;
 
 import java.util.ArrayList;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class GalleryActivity extends AppCompatActivity {
     public static final String EXTRA_PHOTOS = "photos";
+    private static final String CONSUMER_KEY = "54NT4vYp2nIX8u79dsb2jsX4VUsMnvPHDAu28ucb";
+
+    private int mCurrentPage = 1;
+
+    private boolean loading = false;
+    int pastVisibleItems, visibleItemCount, totalItemCount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,13 +31,48 @@ public class GalleryActivity extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         ArrayList<Photo> photos = bundle.getParcelableArrayList(EXTRA_PHOTOS);
         // Create an instance of the GreedoLayoutManager and pass it to the RecyclerView
-        GalleryAdapter recyclerAdapter = new GalleryAdapter(this, photos);
-        GreedoLayoutManager layoutManager = new GreedoLayoutManager(recyclerAdapter);
+        final GalleryAdapter recyclerAdapter = new GalleryAdapter(this, photos);
+        final GreedoLayoutManager layoutManager = new GreedoLayoutManager(recyclerAdapter);
 
         RecyclerView recyclerView = (RecyclerView)findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(recyclerAdapter);
 
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                if (dy > 0) //check for scroll down
+                {
+                    visibleItemCount = layoutManager.getChildCount();
+                    totalItemCount = layoutManager.getItemCount();
+                    pastVisibleItems = layoutManager.findFirstVisibleItemPosition();
+
+                    if (!loading) {
+                        if ((visibleItemCount + pastVisibleItems) >= totalItemCount) {
+                            loading = true;
+                            mCurrentPage++;
+                            //fetch new data
+                            Call<Gallery> call = RestClient.getService().getPhotos("popular", 4, mCurrentPage, CONSUMER_KEY);
+                            call.enqueue(new Callback<Gallery>() {
+                                @Override
+                                public void onResponse(Call<Gallery> call, Response<Gallery> response) {
+//                                    Log.d(TAG, "success");
+                                    Gallery gallery = response.body();
+                                    ArrayList<Photo> photos = gallery.photos;
+                                    recyclerAdapter.updatePhotos(photos);
+                                    loading = false;
+                                }
+
+                                @Override
+                                public void onFailure(Call<Gallery> call, Throwable t) {
+//                                    Log.d(TAG, "failed");
+                                }
+                            });
+                        }
+                    }
+                }
+            }
+        });
         // Set the max row height in pixels
         DisplayMetrics metrics = getResources().getDisplayMetrics();
         int maxRowHeight = metrics.heightPixels / 3;

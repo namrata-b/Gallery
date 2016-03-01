@@ -10,6 +10,6 @@ import retrofit2.http.Query;
 public interface IApiService {
 
     @GET("/v1/photos")
-    public Call<Gallery> getPhotos(@Query("feature") String feature, @Query("image_size") int imageSize, @Query("rpp") int rpp, @Query("consumer_key") String consumerKey);
+    public Call<Gallery> getPhotos(@Query("feature") String feature, @Query("image_size") int imageSize, @Query("page") int page, @Query("consumer_key") String consumerKey);
 
 }

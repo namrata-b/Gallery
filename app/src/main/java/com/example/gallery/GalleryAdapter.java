@@ -93,6 +93,11 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.PhotoVie
         });
     }
 
+    public void updatePhotos(ArrayList<Photo>updated) {
+        mImages.addAll(updated);
+        notifyDataSetChanged();
+    }
+
     @Override
     public int getItemCount() {
         return mImages.size();
