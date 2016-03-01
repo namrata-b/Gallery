@@ -16,13 +16,14 @@ public class SplashScreenActivity extends AppCompatActivity {
     private static final String TAG = SplashScreenActivity.class.getName();
     private static final String CONSUMER_KEY = "54NT4vYp2nIX8u79dsb2jsX4VUsMnvPHDAu28ucb";
     public static final int IMAGE_COUNT = 36;
+    public static final int IMAGE_SIZE = 4;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
 
-        Call<Gallery> call = RestClient.getService().getPhotos("popular", IMAGE_COUNT, CONSUMER_KEY);
+        Call<Gallery> call = RestClient.getService().getPhotos("popular", IMAGE_SIZE, IMAGE_COUNT, CONSUMER_KEY);
         call.enqueue(new Callback<Gallery>() {
             @Override
             public void onResponse(Call<Gallery> call, Response<Gallery> response) {
@@ -33,6 +34,7 @@ public class SplashScreenActivity extends AppCompatActivity {
                 Intent intent = new Intent(SplashScreenActivity.this, GalleryActivity.class);
                 intent.putParcelableArrayListExtra(GalleryActivity.EXTRA_PHOTOS, photos);
                 startActivity(intent);
+                finish();
             }
 
             @Override

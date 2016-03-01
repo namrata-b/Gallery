@@ -1,7 +1,9 @@
 package com.example.gallery;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
@@ -65,6 +67,30 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.PhotoVie
         Picasso.with(context)
                 .load(mImages.get(position).image_url)
                 .into(holder.mImageView);
+
+        holder.mImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(mContext, DetailsActivity.class);
+
+                // Interesting data to pass across are the thumbnail size/location, the
+                // resourceId of the source bitmap, the picture description, and the
+                // orientation (to avoid returning back to an obsolete configuration if
+                // the device rotates again in the meantime)
+
+                int[] screenLocation = new int[2];
+                view.getLocationOnScreen(screenLocation);
+
+                //Pass the image title and url to DetailsActivity
+                i.putExtra("left", screenLocation[0]).
+                        putExtra("top", screenLocation[1]).
+                        putExtra("width", view.getWidth()).
+                        putExtra("height", view.getHeight()).
+                        putExtra("image", mImages.get(position));
+
+                mContext.startActivity(i);
+            }
+        });
     }
 
     @Override
