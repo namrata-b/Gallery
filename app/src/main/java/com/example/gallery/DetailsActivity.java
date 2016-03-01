@@ -21,11 +21,6 @@ import com.squareup.picasso.Picasso;
  * status bar and navigation/system bar) with user interaction.
  */
 public class DetailsActivity extends AppCompatActivity {
-    public static final String EXTRA_TOP = "top";
-    public static final String EXTRA_LEFT = "left";
-    public static final String EXTRA_WIDTH = "width";
-    public static final String EXTRA_HEIGHT = "height";
-    public static final String EXTRA_IMAGE = "image";
 
     private static final int ANIM_DURATION = 200;
 
@@ -55,11 +50,11 @@ public class DetailsActivity extends AppCompatActivity {
 
         //retrieves the thumbnail data
         Bundle bundle = getIntent().getExtras();
-        thumbnailTop = bundle.getInt(EXTRA_TOP);
-        thumbnailLeft = bundle.getInt(EXTRA_LEFT);
-        thumbnailWidth = bundle.getInt(EXTRA_WIDTH);
-        thumbnailHeight = bundle.getInt(EXTRA_HEIGHT);
-        photo = bundle.getParcelable(EXTRA_IMAGE);
+        thumbnailTop = bundle.getInt(Constants.EXTRA_TOP);
+        thumbnailLeft = bundle.getInt(Constants.EXTRA_LEFT);
+        thumbnailWidth = bundle.getInt(Constants.EXTRA_WIDTH);
+        thumbnailHeight = bundle.getInt(Constants.EXTRA_HEIGHT);
+        photo = bundle.getParcelable(Constants.EXTRA_IMAGE);
 
         //Set the background color to black
         frameLayout = (FrameLayout) findViewById(R.id.details_background);

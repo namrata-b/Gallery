@@ -15,9 +15,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class GalleryActivity extends AppCompatActivity {
-    public static final String EXTRA_PHOTOS = "photos";
-    private static final String CONSUMER_KEY = "54NT4vYp2nIX8u79dsb2jsX4VUsMnvPHDAu28ucb";
-
     private int mCurrentPage = 1;
 
     private boolean loading = false;
@@ -29,7 +26,7 @@ public class GalleryActivity extends AppCompatActivity {
         setContentView(R.layout.activity_gallery);
 
         Bundle bundle = getIntent().getExtras();
-        ArrayList<Photo> photos = bundle.getParcelableArrayList(EXTRA_PHOTOS);
+        ArrayList<Photo> photos = bundle.getParcelableArrayList(Constants.EXTRA_PHOTOS);
         // Create an instance of the GreedoLayoutManager and pass it to the RecyclerView
         final GalleryAdapter recyclerAdapter = new GalleryAdapter(this, photos);
         final GreedoLayoutManager layoutManager = new GreedoLayoutManager(recyclerAdapter);
@@ -52,7 +49,7 @@ public class GalleryActivity extends AppCompatActivity {
                             loading = true;
                             mCurrentPage++;
                             //fetch new data
-                            Call<Gallery> call = RestClient.getService().getPhotos("popular", 4, mCurrentPage, CONSUMER_KEY);
+                            Call<Gallery> call = RestClient.getService().getPhotos(Constants.FEATURE, Constants.IMAGE_SIZE, mCurrentPage, Constants.CONSUMER_KEY);
                             call.enqueue(new Callback<Gallery>() {
                                 @Override
                                 public void onResponse(Call<Gallery> call, Response<Gallery> response) {

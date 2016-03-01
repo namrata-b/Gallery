@@ -14,8 +14,7 @@ import retrofit2.Response;
 public class SplashScreenActivity extends AppCompatActivity {
 
     private static final String TAG = SplashScreenActivity.class.getName();
-    private static final String CONSUMER_KEY = "54NT4vYp2nIX8u79dsb2jsX4VUsMnvPHDAu28ucb";
-    public static final int IMAGE_SIZE = 4;
+
     public static final int PAGE = 1;
 
     @Override
@@ -23,7 +22,7 @@ public class SplashScreenActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
 
-        Call<Gallery> call = RestClient.getService().getPhotos("popular", IMAGE_SIZE, PAGE, CONSUMER_KEY);
+        Call<Gallery> call = RestClient.getService().getPhotos(Constants.FEATURE, Constants.IMAGE_SIZE, PAGE, Constants.CONSUMER_KEY);
         call.enqueue(new Callback<Gallery>() {
             @Override
             public void onResponse(Call<Gallery> call, Response<Gallery> response) {
@@ -32,7 +31,7 @@ public class SplashScreenActivity extends AppCompatActivity {
                 ArrayList<Photo> photos = gallery.photos;
 
                 Intent intent = new Intent(SplashScreenActivity.this, GalleryActivity.class);
-                intent.putParcelableArrayListExtra(GalleryActivity.EXTRA_PHOTOS, photos);
+                intent.putParcelableArrayListExtra(Constants.EXTRA_PHOTOS, photos);
                 startActivity(intent);
                 finish();
             }
