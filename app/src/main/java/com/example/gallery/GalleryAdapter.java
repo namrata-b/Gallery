@@ -82,11 +82,11 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.PhotoVie
                 view.getLocationOnScreen(screenLocation);
 
                 //Pass the image title and url to DetailsActivity
-                i.putExtra("left", screenLocation[0]).
-                        putExtra("top", screenLocation[1]).
-                        putExtra("width", view.getWidth()).
-                        putExtra("height", view.getHeight()).
-                        putExtra("image", mImages.get(position));
+                i.putExtra(DetailsActivity.EXTRA_LEFT, screenLocation[0]).
+                        putExtra(DetailsActivity.EXTRA_TOP, screenLocation[1]).
+                        putExtra(DetailsActivity.EXTRA_WIDTH, view.getWidth()).
+                        putExtra(DetailsActivity.EXTRA_HEIGHT, view.getHeight()).
+                        putExtra(DetailsActivity.EXTRA_IMAGE, mImages.get(position));
 
                 mContext.startActivity(i);
             }
