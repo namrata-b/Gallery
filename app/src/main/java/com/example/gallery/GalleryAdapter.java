@@ -1,5 +1,6 @@
 package com.example.gallery;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
@@ -89,6 +90,7 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.PhotoVie
                         putExtra(Constants.EXTRA_IMAGE, mImages.get(position));
 
                 mContext.startActivity(i);
+                ((Activity)mContext).overridePendingTransition(0, 0);
             }
         });
     }
