@@ -45,7 +45,7 @@ public class GalleryActivity extends AppCompatActivity {
                     pastVisibleItems = layoutManager.findFirstVisibleItemPosition();
 
                     if (!loading) {
-                        if ((visibleItemCount + pastVisibleItems) >= totalItemCount) {
+                        if ((visibleItemCount + pastVisibleItems)*1.1 >= totalItemCount) {
                             loading = true;
                             mCurrentPage++;
                             //fetch new data

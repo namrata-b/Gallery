@@ -65,6 +65,14 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.PhotoVie
     public void onBindViewHolder(PhotoViewHolder holder, final int position) {
         Context context = holder.mImageView.getContext();
 
+        int PREFETCH_CACHE_SIZE = 6;
+        int lastIndex = (position+PREFETCH_CACHE_SIZE);
+        int limit = mImages.size()>lastIndex? lastIndex : mImages.size();
+        for (int i = position; i < limit; i++) {
+            Picasso.with(context)
+                    .load(mImages.get(position).image_url)
+                    .fetch();
+        }
         Picasso.with(context)
                 .load(mImages.get(position).image_url)
                 .into(holder.mImageView);
