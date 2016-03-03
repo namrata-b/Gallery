@@ -23,7 +23,7 @@
         <activity
             android:name=".DetailsActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:theme="@style/FullscreenTheme"></activity>
+            android:theme="@style/Transparent"></activity>
     </application>
 
 </manifest>

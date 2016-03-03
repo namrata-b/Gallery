@@ -22,7 +22,7 @@ import com.squareup.picasso.Picasso;
  */
 public class DetailsActivity extends AppCompatActivity {
 
-    private static final int ANIM_DURATION = 200;
+    private static final int ANIM_DURATION = 500;
 
     private int thumbnailTop;
     private int thumbnailLeft;
